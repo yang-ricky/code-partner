@@ -27,4 +27,16 @@
     <extensions defaultExtensionNs="com.intellij">
 
     </extensions>
+
+    <actions>
+        <action id="com.idea-aedi.plugin.Hello" class="com.plugin.codepartner.HelloAction" text="Hello"
+                description="Say hello.">
+            <add-to-group group-id="HelpMenu" anchor="first"/>
+        </action>
+
+        <group id="com.idea-aedi.plugin.CodeFriend" text="_CodeFriend" description="JustryDeng's common util.">
+            <add-to-group group-id="MainMenu" anchor="last"/>
+            <action id="com.idea-aedi.plugin.CodeFriend" class="com.plugin.codepartner.HelloAction" text="Say _Hello" description="Say hello."/>
+        </group>
+    </actions>
 </idea-plugin>
