@@ -29,14 +29,14 @@
     </extensions>
 
     <actions>
-        <action id="com.idea-aedi.plugin.Hello" class="com.plugin.codepartner.HelloAction" text="Hello"
-                description="Say hello.">
-            <add-to-group group-id="HelpMenu" anchor="first"/>
-        </action>
+<!--        <action id="com.idea-aedi.plugin.Hello" class="com.plugin.codepartner.HelloAction" text="Hello"-->
+<!--                description="Say hello11.">-->
+<!--            <add-to-group group-id="HelpMenu" anchor="first"/>-->
+<!--        </action>-->
 
         <group id="com.idea-aedi.plugin.CodeFriend" text="_CodeFriend" description="JustryDeng's common util.">
             <add-to-group group-id="MainMenu" anchor="last"/>
-            <action id="com.idea-aedi.plugin.CodeFriend" class="com.plugin.codepartner.HelloAction" text="Say _Hello" description="Say hello."/>
+            <action id="com.idea-aedi.plugin.MainCodeFriend" class="com.plugin.codepartner.MyAction" text="Say _Hello" description="Say hello22."/>
         </group>
     </actions>
 </idea-plugin>
