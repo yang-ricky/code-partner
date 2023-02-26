@@ -42,7 +42,7 @@ public class MyAction extends AnAction {
 
 
         // 创建一个面板
-        JPanel panel = new JPanel();
+        JPanel panel = new MyPanel();
         panel.setLayout(new FlowLayout(FlowLayout.CENTER));
 
         // 创建一个新的树组件
