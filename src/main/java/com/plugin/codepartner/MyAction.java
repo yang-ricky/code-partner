@@ -1,9 +1,17 @@
 package com.plugin.codepartner;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.diagnostic.Logger;
+import com.intellij.openapi.fileEditor.FileEditorManager;
+import com.intellij.openapi.fileEditor.OpenFileDescriptor;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogBuilder;
+import com.intellij.openapi.vfs.LocalFileSystem;
+import com.intellij.openapi.vfs.VirtualFile;
 
 import javax.swing.*;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
@@ -17,19 +25,33 @@ import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetAdapter;
 import java.awt.dnd.DropTargetDropEvent;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MyAction extends AnAction {
 
+    private JTree tree;
+
+    private static final Logger LOG = Logger.getInstance(MyAction.class);
+
     public void actionPerformed(AnActionEvent e) {
+        // 获取当前的项目对象
+        Project project = e.getProject();
+
+
         // 创建一个面板
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout(FlowLayout.CENTER));
 
         // 创建一个新的树组件
-        JTree tree = new JTree();
+        tree = new JTree();
+
+        // 添加树节点选择监听器
+        MyTreeSelectionListener listener = new MyTreeSelectionListener(project);
+        tree.addTreeSelectionListener(listener);
+
         tree.setPreferredSize(new Dimension(300, 150));
 
         // 创建一个根节点
@@ -129,6 +151,36 @@ public class MyAction extends AnAction {
         // 显示面板
         new DialogBuilder().centerPanel(panel).show();
     }
+
+    class MyTreeSelectionListener implements TreeSelectionListener {
+
+        private final Project project;
+
+        public MyTreeSelectionListener(Project project) {
+            this.project = project;
+        }
+
+        @Override
+        public void valueChanged(TreeSelectionEvent e) {
+            DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
+            if (node != null) {
+                // 获取要打开的文件
+                File file = new File("/Users/yang/Code/b2c/el-b2b-onboarding/src/main/java/com/eflabs/b2b/hk2/AppBinder1.java");
+
+                // 如果文件存在
+                if (file.exists()) {
+                    // 获取文件对应的 VirtualFile
+                    VirtualFile virtualFile = LocalFileSystem.getInstance().findFileByIoFile(file);
+                    if (virtualFile != null) {
+                        // 打开文件并跳转到指定行
+                        FileEditorManager.getInstance(project).openTextEditor(new OpenFileDescriptor(project, virtualFile, 10), true);
+                    }
+                }
+            }
+        }
+    }
+
+
 
     // 实现Transferable接口，表示可以拖拽的数据
     public static class MyTransferable implements Transferable {
