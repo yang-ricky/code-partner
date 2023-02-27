@@ -19,7 +19,7 @@ intellij {
 }
 
 dependencies {
-    implementation("org.webjars:highlightjs:11.3.1")
+    implementation("org.webjars:highlightjs:11.5.0")
     implementation("org.commonmark:commonmark:0.21.0")
 }
 
