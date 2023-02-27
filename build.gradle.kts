@@ -18,6 +18,12 @@ intellij {
     plugins.set(listOf(/* Plugin Dependencies */))
 }
 
+dependencies {
+    implementation("org.webjars:highlightjs:11.3.1")
+    implementation("org.commonmark:commonmark:0.21.0")
+}
+
+
 tasks {
     // Set the JVM compatibility versions
     withType<JavaCompile> {
